@@ -1,4 +1,5 @@
 import discord
+from exams.exams import examsArray
 
 # created file with one line which contains token of the bot
 def readToken():
@@ -10,6 +11,7 @@ def getSerwerId():
         return int(f.read())
 
 client = discord.Client()
+exams = examsArray()
 
 @client.event
 async def on_message(message):
@@ -28,6 +30,10 @@ async def on_message(message):
                 data.pop(0)
                 data.pop(0)
                 print(data)
+                exams.addExam(str(data[0]), str(data[1]), str(data[2]), examType=str(data[3]))
+        if "BOT display" in message.content:
+            for exam in exams.exams:
+                await message.channel.send(f"{exam.day}.{exam.month} {exam.subject} -- {exam.examType}")
 
 
 client.run(readToken())

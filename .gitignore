@@ -128,5 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# token File for discord
+# token File and serwer id for discord
+token.txt
 token.txt

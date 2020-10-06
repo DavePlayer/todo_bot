@@ -51,7 +51,7 @@ async def on_message(message):
                         exams.addExam(str(data[0]), str(data[1]), date.today().year + 1 , str(data[2]), examType=str(data[3]))
                         await message.channel.send(" ``` Dodawanie sprawdzianu zakończone na następny rok  ``` ")
                     else:
-                        exams.addExam(str(data[0]), str(data[1]), date.today().year , str(data[2]), examType=str(data[3]))
+                        exams.addExam(str(data[0]), str(data[1]), str(data[2]), date.today().year , str(data[2]), examType=str(data[3]))
                         await message.channel.send(" ``` Dodawanie sprawdzianu zakończone na ten rok  ``` ")
                 else:
                     await message.channel.send(" ``` Nie można dodawać zaległych sprawdzianów  ``` ")
@@ -62,6 +62,36 @@ async def on_message(message):
                 await message.channel.send(" ```json\n "+ exams.giveExamSchedule() + "\n ``` ")
             else:
                 await message.channel.send("Nie ma żadnych rekordów")
+        if "BOT remove" in message.content:
+            # today = date.today().day
+            # await message.channel.send(today)
+            data = message.content.split()
+            data.pop(0)
+            data.pop(0)
+            if len(exams.exams) > 0:
+                print(data)
+                if exams.removeExam(data[0], data[1], data[2]):
+                    await message.channel.send(" ```\n "+ "Poprawnie usunięto rekord" + "\n ``` ")
+                else:
+                    await message.channel.send(" ```\n "+ "Nie ma takiego rekordu" + "\n ``` ")
+            else:
+                await message.channel.send("Nie ma żadnych rekordów")
+
+
+# exams.addExam(day='8', year=2020, month='10', subject="angielski", examType="sprawdzian")
+# exams.addExam(day='8', year=2020, month='10', subject="angielski", examType="sprawdzian")
+# exams.addExam(day='8', year=2020, month='10', subject="niemiecki", examType="kartkowka")
+# exams.addExam(day='8', year=2020, month='10', subject="niemiecki", examType="kartkowka")
+# exams.addExam(day='8', year=2020, month='10', subject="niemiecki", examType="kartkowka")
+# exams.addExam(day='8', year=2020, month='10', subject="niemiecki", examType="kartkowka")
+# exams.addExam(day='8', year=2020, month='10', subject="niemiecki", examType="kartkowka")
+# exams.addExam(day='8', year=2020, month='10', subject="niemiecki", examType="kartkowka")
+# exams.addExam(day='9', year=2020, month='10', subject="polski", examType="odpowiedz")
+# exams.addExam(day='9', year=2020, month='10', subject="polski", examType="odpowiedz")
+# exams.addExam(day='9', year=2020, month='10', subject="polski", examType="odpowiedz")
+# exams.addExam(day='9', year=2020, month='10', subject="polski", examType="odpowiedz")
+# exams.addExam(day='9', year=2020, month='10', subject="polski", examType="odpowiedz")
+# exams.addExam(day='9', year=2020, month='10', subject="polski", examType="odpowiedz")
 
 client.run(readToken())
 

@@ -18,16 +18,17 @@ def getSerwerId():
     with open ('./serwer.txt', 'r') as f:
         return int(f.read())
 
-async def daily_task():
+async def weekly_task():
     print("bot fully loaded")
-    print('reseting days at sundays 7:00. Current hour: ', datetime.now().hour)
-    if int(date.today().weekday()) == 7 and int(datetime.now().hour) == 7:
-        exams.resetExams()
-    await asyncio.sleep(60*60)
+    while True:
+        print('reseting days at sundays 7:00. Current hour: ', datetime.now().hour)
+        if int(date.today().weekday()) == 7 and int(datetime.now().hour) == 7:
+            exams.resetExams()
+        await asyncio.sleep(60*60)
 
 @client.event
 async def on_ready():
-    await daily_task()
+    await client.loop.create_task(weekly_task())
 
 @client.event
 async def on_message(message):
@@ -58,13 +59,11 @@ async def on_message(message):
             # today = date.today().day
             # await message.channel.send(today)
             if len(exams.exams) > 0:
-                for exam in exams.exams:
-                    await message.channel.send(f"{exam.day}.{exam.month} {getDayName(date(2020, int(exam.month), int(exam.day)).weekday())} {exam.subject} -- {exam.examType}")
+                await message.channel.send(" ```json\n "+ exams.giveExamSchedule() + "\n ``` ")
             else:
                 await message.channel.send("Nie ma żadnych rekordów")
 
 client.run(readToken())
-schedule.every().sunday.at("10:00").do(exams.resetExams())
 
 # i = 0
 # for exam in exams.exams:
@@ -78,6 +77,7 @@ schedule.every().sunday.at("10:00").do(exams.resetExams())
 #     if i < 5:
 #         print(f'(readToken({exam.day}.{exam.month} {getDayName(date(date.today().year, int(exam.month), int(exam.day)).weekday())} {exam.subject} -- {exam.examType}')
 #         i += 1
+
 
 # exams.resetExams()
     

@@ -131,3 +131,5 @@ dmypy.json
 # token File and serwer id for discord
 token.txt
 token.txt
+
+env/*

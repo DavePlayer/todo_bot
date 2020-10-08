@@ -1,16 +1,20 @@
 import discord
-import schedule
 import asyncio
 from examSystem.exams import ExamsArray
 from datetime import date, datetime, time
 from examSystem.getDayName import getDayName
+import os
+from dotenv import load_dotenv
 
 
 client = discord.Client()
 exams = ExamsArray()
+load_dotenv()
 
 # created file with one line which contains token of the bot
 def readToken():
+    return os.environ.get('TOKEN')
+    print('token: ', token)
     with open('./token.txt', 'r') as f:
         return f.read()
 

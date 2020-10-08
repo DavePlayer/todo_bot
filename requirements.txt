@@ -1,5 +1,4 @@
 discord
 asyncio
 datetime
-os
 dotenv

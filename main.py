@@ -4,12 +4,12 @@ from examSystem.exams import ExamsArray
 from datetime import date, datetime, time
 from examSystem.getDayName import getDayName
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 
 client = discord.Client()
 exams = ExamsArray()
-#load_dotenv()
+load_dotenv()
 
 # created file with one line which contains token of the bot
 def readToken():
@@ -50,12 +50,13 @@ async def on_message(message):
                 data = message.content.split()
                 data.pop(0)
                 data.pop(0)
+                print(data)
                 if ( int(data[0]) >= int(date.today().day) and int(date.today().month) == int(data[1]) ) or ( int(data[1]) > int(date.today().month) ) or ( int(date.today().month) == 12 ):
                     if int(date.today().month) == 12 and int(data[1]) != 12:
-                        exams.addExam(str(data[0]), str(data[1]), date.today().year + 1 , str(data[2]), examType=str(data[3]))
+                        exams.addExam(str(data[0]), str(data[1]), date.today().year + 1 , str(data[2]), str(data[3]))
                         await message.channel.send(" ``` Dodawanie sprawdzianu zakończone na następny rok  ``` ")
                     else:
-                        exams.addExam(str(data[0]), str(data[1]), str(data[2]), date.today().year , str(data[2]), examType=str(data[3]))
+                        exams.addExam(str(data[0]),  date.today().year , str(data[1]), str(data[2]), examType=str(data[3]))
                         await message.channel.send(" ``` Dodawanie sprawdzianu zakończone na ten rok  ``` ")
                 else:
                     await message.channel.send(" ``` Nie można dodawać zaległych sprawdzianów  ``` ")

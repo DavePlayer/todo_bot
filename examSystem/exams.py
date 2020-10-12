@@ -9,7 +9,7 @@ class ExamsArray :
         self.exams.append(Exam(day, year, month, subject, examType))
 
     def resetExams(self):
-        for i in self.exams:
+        for i in range(5):
             self.exams.pop(0)
 
         for exam in self.exams:
